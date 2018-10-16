@@ -1,0 +1,4 @@
+REPO=registry.soloweb.pt/lcdbar-api
+CONTAINER=lcdbar-api
+TAG=local
+REGISTRY=registry.soloweb.pt/

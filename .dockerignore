@@ -1,0 +1,30 @@
+# linux temporary files
+*~
+
+# emacs temporary files
+\#*\#
+
+# ignore itself
+.dockerignore
+
+# ignore Dockerfile
+Dockerfile
+
+# ignore git
+.git
+.gitignore
+.gitmodules
+
+# ignore coverage files
+.coverage
+.cover
+cover
+
+# ignore static files
+*/api/static
+
+# ignore nose id file
+.noseids
+
+# ignore utils scripts
+deploy.sh

@@ -1,0 +1,51 @@
+lcdbar-api:
+  image: registry.soloweb.pt/lcdbar-api:local
+  container_name: lcdbar-api
+  hostname: api
+  environment:
+    - VIRTUAL_HOST=api.lcdbar.local
+    - APP_IN_PRODUCTION=false
+    - TERM=xterm
+    - SECRET_KEY=ghfsdfsadkuychf3453rwer45zgfiruy65465df
+    - DEBUG=True
+    # If providing multiple servers use localhost:3000,api.local,api.example.com
+    - CORS_ORIGIN_ALLOW_ALL=True
+    - CORS_ORIGIN_WHITELIST=localhost:3000,localhost:8000,lcdbar.soloweb.pt,lcdbar.local
+    # Database
+    - DATABASE_NAME=postgres
+    - DATABASE_USER=postgres
+    - DATABASE_PASSWORD=postgres
+    - DATABASE_HOST=database
+    - DATABASE_PORT=5432
+    # Allowed Hosts
+    - ALLOWED_HOSTS=api.lcdbar.local
+    # Throttling
+    - default_throttle_rate_anon=100/day,
+    - default_throttle_rate_user=1000/day
+  expose:
+    - "80"
+  volumes:
+    - ./:/var/www
+  links:
+    - lcdbar-database
+lcdbar-database:
+  image: registry.soloweb.pt/postgres-database:latest
+  container_name: lcdbar-database
+  hostname: database
+  environment:
+    - TERM=xterm
+  volumes:
+    - /var/lib/postgresql/data
+lcdbar-dbadmin:
+  image: registry.soloweb.pt/postgres-dbadmin:latest
+  container_name: lcdbar-dbadmin
+  hostname: dbadmin
+  environment:
+    - VIRTUAL_HOST=dbadmin.lcdbar.local
+    - TERM=xterm
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+  expose:
+    - "80"
+  links:
+    - lcdbar-database

@@ -1,0 +1,27 @@
+# linux temporary files
+*~
+
+# emacs temporary files
+\#*\#
+
+# ignore coverage files
+.coverage
+cover
+
+# python cache
+__pycache__
+
+# ignore contents of static dir
+*/api/static/
+
+# ignore docker-compose files
+*docker-compose.yml
+
+# ignore log files
+logs/
+
+# ignore nose id file
+.noseids
+
+# ignore utils scripts
+deploy.sh
