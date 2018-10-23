@@ -1,41 +1,14 @@
 import graphene
 
-from graphene.relay import Node
-
-from graphene_django.filter import DjangoFilterConnectionField
-
 from django.contrib.auth import get_user_model
 
-import lcdbar.api.schema
+from lcdbar.api import schema, models
 
-from lcdbar.api import models
 
 class Query(graphene.ObjectType):
-    #all_products = graphene.List(lcdbar.api.schema.ProductType)
-    all_users = graphene.List(lcdbar.api.schema.UserType)
-    all_products = graphene.List(lcdbar.api.schema.ProductType)
-
-    #product = Node.Field(lcdbar.api.schema.ProductType)
-    product = graphene.Field(lcdbar.api.schema.ProductType, id=graphene.Int())
-
-    #all_products = DjangoFilterConnectionField(lcdbar.api.schema.ProductType)
-
-  #   query {
-  # allProducts(name: "Agua") {
-  #     edges {
-  #         node {
-  #             name
-  #         }
-  #     }
-  # }
-  #   }
-
-    # def resolve_all_products(self, info, **kwargs):
-    #     print('not using this shit anymore')
-    #     return models.Product.objects.all()
-
-    # def resolve_product(self, info, **kwargs):
-    #     print('fucking resolving')
+    all_users = graphene.List(schema.UserType)
+    all_products = graphene.List(schema.ProductType)
+    product = graphene.Field(schema.ProductType, id=graphene.Int())
 
     def resolve_all_products(self, info, **kwargs):
         return models.Product.objects.all()
@@ -51,5 +24,4 @@ class Query(graphene.ObjectType):
     def resolve_all_users(self, info, **kwargs):
         return get_user_model().objects.all()
 
-
-schema = graphene.Schema(query=Query, mutation=lcdbar.api.schema.Mutations)
+schema = graphene.Schema(query=Query, mutation=schema.Mutations)
