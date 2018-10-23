@@ -8,3 +8,11 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class Payment(models.Model):
+    barcode = models.IntegerField()
+    pin = models.IntegerField()
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name

@@ -6,6 +6,10 @@ from graphene_django.types import DjangoObjectType
 
 from lcdbar.api import models
 
+class PaymentType(DjangoObjectType):
+    class Meta:
+        model = models.Payment
+
 class ProductType(DjangoObjectType):
     class Meta:
         model = models.Product
@@ -13,6 +17,18 @@ class ProductType(DjangoObjectType):
 class UserType(DjangoObjectType):
     class Meta:
         model = get_user_model()
+
+class CreatePayment(graphene.Mutation):
+    class Arguments:
+        barcode = graphene.Int()
+        pin = graphene.Int()
+
+    # output fields
+    payment = graphene.Field(lambda: PaymentType)
+
+    def mutate(self, info, barcode, pin):
+        payment = models.Payment.objects.create(barcode=barcode, pin=pin)
+        return CreatePayment(payment=payment)
 
 class CreateProduct(graphene.Mutation):
     class Arguments:
@@ -29,3 +45,4 @@ class CreateProduct(graphene.Mutation):
 
 class Mutations(graphene.ObjectType):
     create_product = CreateProduct.Field()
+    create_payment = CreatePayment.Field()
